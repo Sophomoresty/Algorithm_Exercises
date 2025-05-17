@@ -1,19 +1,28 @@
 {
-    // 使用 IntelliSense 了解相关属性。 
-    // 悬停以查看现有属性的描述。
-    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name":"Compile and Run Current File",
-            "type":"cppdbg",
+            "name": "Compile and Run Current File", // 你的配置名称
+            "type": "cppdbg", // 调试器类型
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "cwd": "${fileDirname}",
-            "preLaunchTask": "C/C++: g++ 生成活动文件",
-            "externalConsole": false
-            
+            "program": "${fileDirname}/${fileBasenameNoExtension}", // 指向任务生成的可执行文件
+            "args": [], // 命令行参数
+            "stopAtEntry": false, // 是否在程序入口停止调试
+            "cwd": "${fileDirname}", // 程序运行的工作目录
+            "environment": [],
+            "externalConsole": false, // ** 在集成终端运行 **
+            // *** 补充完整的调试器配置字段 (WSL + GDB) ***
+            "MIMode": "gdb", // 指定调试接口模式为 GDB
+            "miDebuggerPath": "/usr/bin/gdb", // ** 指定 GDB 可执行文件的路径 ** (WSL 中的默认路径)
+            "setupCommands": [ // 设置 GDB 命令，例如启用漂亮的打印
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            // ** 重要：指定在运行此配置前先执行哪个任务 **
+            "preLaunchTask": "C/C++: g++ 生成活动文件" // 你的构建任务的 label
         }
-        
     ]
 }
