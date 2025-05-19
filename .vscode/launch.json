@@ -1,28 +1,56 @@
+// .vscode/launch.json
 {
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Compile and Run Current File", // 你的配置名称
-            "type": "cppdbg", // 调试器类型
-            "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}", // 指向任务生成的可执行文件
+            // === 配置 1: C++ 调试/运行配置 ===
+            // 用于调试 (F5) 或直接运行 (Ctrl+F5) 当前打开的 C++ 文件
+            "name": "C++: Debug/Run Current File (GDB)", // 名称表明此配置用于两种模式
+            "type": "cppdbg", // C/C++ 调试器
+            "request": "launch", // 启动一个新的进程
+            "program": "${fileDirname}/build/${fileBasenameNoExtension}", // 要启动的程序路径
             "args": [], // 命令行参数
-            "stopAtEntry": false, // 是否在程序入口停止调试
-            "cwd": "${fileDirname}", // 程序运行的工作目录
+            "stopAtEntry": false, // 默认不停在入口，调试时可以手动设置断点
+            "cwd": "${fileDirname}", // 工作目录
             "environment": [],
-            "externalConsole": false, // ** 在集成终端运行 **
-            // *** 补充完整的调试器配置字段 (WSL + GDB) ***
-            "MIMode": "gdb", // 指定调试接口模式为 GDB
-            "miDebuggerPath": "/usr/bin/gdb", // ** 指定 GDB 可执行文件的路径 ** (WSL 中的默认路径)
-            "setupCommands": [ // 设置 GDB 命令，例如启用漂亮的打印
+            "externalConsole": false, // 通常调试时使用集成终端，运行模式下 Ctrl+F5 也会使用这个终端
+            "MIMode": "gdb", // GDB 调试器
+            "miDebuggerPath": "/usr/bin/gdb", // GDB 路径，请确认
+            "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
             ],
-            // ** 重要：指定在运行此配置前先执行哪个任务 **
-            "preLaunchTask": "C/C++: g++ 生成活动文件" // 你的构建任务的 label
+            // 在启动前执行 C++ 构建任务
+            "preLaunchTask": "C/C++: g++ Build in build subdirectory"
+            // 注意：这里不需要 noDebug 属性，F5/Ctrl+F5 会自动处理
+        },
+        {
+            // === 配置 2: C 调试/运行配置 ===
+            // 用于调试 (F5) 或直接运行 (Ctrl+F5) 当前打开的 C 文件
+            "name": "C: Debug/Run Current File (GDB)", // 名称表明此配置用于两种模式
+            "type": "cppdbg", // C/C++ 调试器
+            "request": "launch", // 启动一个新的进程
+            "program": "${fileDirname}/build/${fileBasenameNoExtension}", // 要启动的程序路径
+            "args": [], // 命令行参数
+            "stopAtEntry": false, // 默认不停在入口
+            "cwd": "${fileDirname}", // 工作目录
+            "environment": [],
+            "externalConsole": false, // 通常调试时使用集成终端
+            "MIMode": "gdb", // GDB 调试器
+            "miDebuggerPath": "/usr/bin/gdb", // GDB 路径，请确认
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            // 在启动前执行 C 构建任务
+            "preLaunchTask": "C/C++: gcc Build in build subdirectory"
+            // 注意：这里不需要 noDebug 属性，F5/Ctrl+F5 会自动处理
         }
     ]
 }
