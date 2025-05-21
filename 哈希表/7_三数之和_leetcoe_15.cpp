@@ -4,6 +4,11 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int> &nums) {
+        // 0. 处理边界情况：如果元素数量不足3个，直接返回空
+        if (nums.size() < 3) {
+            return {};
+        }
+
         // 最后返回的值是多个三元组, 三元组的内容设为[i,j,k], ijk的和为0,
         // 且ijk的序号不能相同, 三元组不能重复
         // 对数组进行排序
@@ -16,7 +21,7 @@ public:
         // 对数组进行遍历
         // 使用i, left, right就是为了避免序号相同
         // 对i, left, right去重, 是为了避免三元组重复
-        for (int i = 0; i < nums.size(); i++) {
+        for (int i = 0; i < nums.size() - 2; i++) {
             // 进入循环前需要去i的重, 重复的情况下结束本次循环
             if (i > 0 && nums[i] == nums[i - 1]) {
                 continue;
