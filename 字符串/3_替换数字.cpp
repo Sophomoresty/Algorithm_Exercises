@@ -8,6 +8,7 @@ int main() {
     while (cin >> s) {
         int old_len = s.size();
         int count = 0;
+        //
         // 1.统计字符中数字出现的次数
         for (auto i : s) {
             if (i >= '0' && i <= '9') {
