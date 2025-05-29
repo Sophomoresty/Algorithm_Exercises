@@ -1,7 +1,3 @@
-#include <deque>
-#include <vector>
-using namespace std;
-
 /*
 滑动窗口主循环的终止条件错误：
 原始条件： for (int i = 1; i + k < nums.size() - 1; i++)
@@ -10,6 +6,11 @@ using namespace std;
 1（第二个窗口的起始）一直迭代到 nums.size() - k（最后一个窗口的起始）。
 正确的条件： for (int i = 1; i <= nums.size() - k; i++)
 */
+#include <deque>
+#include <vector>
+using namespace std;
+
+
 // 构造一个单调队列,
 class Solution {
 private:
