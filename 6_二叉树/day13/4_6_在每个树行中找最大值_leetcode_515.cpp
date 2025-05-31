@@ -14,36 +14,43 @@ struct TreeNode {
 
 class Solution {
 public:
-    void levelorder_traversal(TreeNode *root, vector<double> &res) {
+    void levelorder_traversal(TreeNode *root, vector<int> &vec_res) {
         if (root == nullptr) {
             return;
         }
         queue<TreeNode *> que;
         que.push(root);
-
         while (!que.empty()) {
             int size = que.size();
-            double sum = 0;
-            int i;
-            for (i = 0; i < size; i++) {
-                TreeNode *cur = que.front();
+            TreeNode *cur;
+            int max;
+            // max 初始化为每一层的第一个元素的值
+            for (int i = 0; i < size; i++) {
+                cur = que.front();
                 que.pop();
-                sum += (double)cur->val;
+                if (i == 0) {
+                    max = cur->val;
+                }
+
+                if (max < cur->val) {
+                    max = cur->val;
+                }
+
                 if (cur->left != nullptr) {
                     que.push(cur->left);
                 }
+
                 if (cur->right != nullptr) {
                     que.push(cur->right);
                 }
             }
-            res.push_back(sum / i);
+            vec_res.push_back(max);
         }
     }
-    vector<double> averageOfLevels(TreeNode* root) {
-        vector<double> res;
-        levelorder_traversal(root, res);
-        return res;
-        
-    }
 
+    vector<int> largestValues(TreeNode *root) {
+        vector<int> vec_res;
+        levelorder_traversal(root, vec_res);
+        return vec_res;
+    }
 };
